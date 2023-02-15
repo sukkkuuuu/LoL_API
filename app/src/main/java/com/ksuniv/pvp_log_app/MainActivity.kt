@@ -1,36 +1,76 @@
 package com.ksuniv.pvp_log_app
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.ksuniv.pvp_log_app.data.ResponseUserData
+import com.ksuniv.pvp_log_app.data.ServiceCreator
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val summorer_name : EditText = findViewById(R.id.summorer_name)
+        val summoner_name : EditText = findViewById(R.id.summoner_name)
 //        summorer_name.imeOptions = EditorInfo.IME_ACTION_DONE
-        summorer_name.setOnKeyListener{ v, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_ENTER) {
-                val keyword: String by lazy {
-                    if (summorer_name.text.toString().isNullOrEmpty()) {
-                        return@lazy ""
-                    } else {
-                        return@lazy ""
-                    }
-                }
-                summorer_name.clearFocus()
-                summorer_name.requestFocus()
+//        summoner_name.setOnKeyListener{ v, keyCode, event ->
+//            if(keyCode == KeyEvent.KEYCODE_ENTER) {
+//                val keyword: String by lazy {
+//                    if (summoner_name.text.toString().isNullOrEmpty()) {
+//                        return@lazy ""
+//                    } else {
+//                        return@lazy ""
+//                    }
+//                }
+//                summoner_name.clearFocus()
+//                summoner_name.requestFocus()
+//
+//            }
+//            return@setOnKeyListener false
+//        }
+        val intent = Intent(this, LogActivity::class.java)
+       val btn: Button = findViewById(R.id.search_button)
+       btn.setOnClickListener{
+           requestUserInfo(summoner_name.text.toString())
+       }
+    }
 
+    private fun requestUserInfo(summoner_name: String) {
+        val call: Call<ResponseUserData> = ServiceCreator.sampleService.getUserInfo(summoner_name)
+        call.enqueue(object : Callback<ResponseUserData>{
+            override fun onResponse(
+                call: Call<ResponseUserData>,
+                response: Response<ResponseUserData>
+            ) {
+                if(response.isSuccessful) {
+                    logSearch(response)
+                } else{
+                    Toast.makeText(this@MainActivity, "소환사 정보 없음", Toast.LENGTH_LONG).show()
+                }
             }
-            return@setOnKeyListener false
-        }
+
+            override fun onFailure(call: Call<ResponseUserData>, t: Throwable) {
+                Log.e("NetworkTest", "error: $t")
+            }
+        })
+    }
+
+    private fun logSearch(responseData: Response<ResponseUserData>) {
+        val intent = Intent(this, LogActivity::class.java)
+        val body = responseData.body()
+        intent.putExtra("id", body?.id.toString())
+        intent.putExtra("name", body?.name.toString())
+        intent.putExtra("profileIconId", body?.profileIconId.toString())
+        intent.putExtra("summonerLevel", body?.summonerLevel.toString())
+        startActivity(intent)
     }
 }
