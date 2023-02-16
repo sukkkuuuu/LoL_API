@@ -91,7 +91,6 @@ class LogActivity : AppCompatActivity() {
                     rankedRecordTextView = null
                 }
             }
-            val queryType = it?.queueType.toString()
             val tier = it?.tier.toString()
             val rank = it?.rank.toString()
             val leaguePoint = it?.leaguePoints.toString()
@@ -139,7 +138,7 @@ class LogActivity : AppCompatActivity() {
                     rankedTextView?.text = "UNRANKED"
                 }
             }
-            rankedTextView?.text = rankedTextView?.text.toString() + " - ${leaguePoint}LP"
+            rankedTextView?.text = rankedTextView?.text.toString() + " ${rank} - ${leaguePoint}LP"
             rankedRecordTextView?.text = "${wins}승 ${losses}패"
             it
         }
