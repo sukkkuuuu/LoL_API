@@ -124,19 +124,19 @@ class LogActivity : AppCompatActivity() {
                 }
                 "SILVER" -> {
                     rankedImageView?.setImageResource(R.drawable.silver)
-                    rankedTextView?.text = "SILVER" + " - ${leaguePoint}LP"
+                    rankedTextView?.text = "SILVER"
                 }
                 "BRONZE" -> {
                     rankedImageView?.setImageResource(R.drawable.bronze)
-                    rankedTextView?.text = "BRONZE" + " - ${leaguePoint}LP"
+                    rankedTextView?.text = "BRONZE"
                 }
                 "IRON" -> {
                     rankedImageView?.setImageResource(R.drawable.iron)
-                    rankedTextView?.text = "IRON" + " - ${leaguePoint}LP"
+                    rankedTextView?.text = "IRON"
                 }
                 else -> {
                     rankedImageView?.setImageResource(R.drawable.unranked)
-                    rankedTextView?.text = "UNRANKED" + " - ${leaguePoint}LP"
+                    rankedTextView?.text = "UNRANKED"
                 }
             }
             rankedTextView?.text = rankedTextView?.text.toString() + " - ${leaguePoint}LP"
