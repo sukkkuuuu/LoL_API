@@ -7,6 +7,6 @@
     app:title="전적 검색"
     app:titleTextColor="@color/white"
     android:background="@color/purple_200"
-    app:menu="@menu/menu_toolbar"
+
     >
 </androidx.appcompat.widget.Toolbar>

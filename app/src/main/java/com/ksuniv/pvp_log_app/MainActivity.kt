@@ -5,9 +5,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import android.widget.Toolbar
 import com.ksuniv.pvp_log_app.data.ResponseUserData
 import com.ksuniv.pvp_log_app.data.ServiceCreator
 import retrofit2.Call
@@ -21,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val summoner_name : EditText = findViewById(R.id.summoner_name)
+
+        setSupportActionBar(findViewById(R.id.toolbar))
+//        setCustomToolBar(R.id.toolbar)
+//        supportActionBar?.setDisplayShowTitleEnabled(false)
 //        summorer_name.imeOptions = EditorInfo.IME_ACTION_DONE
 //        summoner_name.setOnKeyListener{ v, keyCode, event ->
 //            if(keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -38,10 +45,25 @@ class MainActivity : AppCompatActivity() {
 //            return@setOnKeyListener false
 //        }
         val intent = Intent(this, LogActivity::class.java)
-       val btn: Button = findViewById(R.id.search_button)
-       btn.setOnClickListener{
+        val btn: Button = findViewById(R.id.search_button)
+        btn.setOnClickListener{
            requestUserInfo(summoner_name.text.toString())
-       }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.favorite_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item!!.itemId) {
+            R.id.favorite -> {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun requestUserInfo(summoner_name: String) {
@@ -73,4 +95,5 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("summonerLevel", body?.summonerLevel.toString())
         startActivity(intent)
     }
+
 }

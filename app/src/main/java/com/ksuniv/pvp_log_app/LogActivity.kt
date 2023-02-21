@@ -5,6 +5,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -21,6 +24,7 @@ class LogActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         val id = intent.getStringExtra("id")
         val name = intent.getStringExtra("name")
@@ -31,6 +35,7 @@ class LogActivity : AppCompatActivity() {
         val imageView: ImageView = findViewById(R.id.imageView)
         val nameTextView: TextView = findViewById(R.id.nameTextView)
         val levelTextView: TextView = findViewById(R.id.levelTextView)
+        val favoriteButton: ImageButton = findViewById(R.id.favorite_btn)
 
         val profileImageUrl = "http://ddragon.leagueoflegends.com/cdn/13.3.1/img/profileicon/${profileIconId}.png"
         nameTextView.text = name
@@ -39,6 +44,10 @@ class LogActivity : AppCompatActivity() {
 //        textView.text = "id: " + id + "\nname: " + name + "\npuuid: " + puuid
         Glide.with(this).load(profileImageUrl).into(imageView)
         requestLeagueInfo(id!!)
+
+        favoriteButton.setOnClickListener{
+            Toast.makeText(this, "Favorite", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun requestLeagueInfo(summoner_id: String) {
@@ -143,4 +152,20 @@ class LogActivity : AppCompatActivity() {
             it
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.favorite_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item!!.itemId) {
+            R.id.favorite -> {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
