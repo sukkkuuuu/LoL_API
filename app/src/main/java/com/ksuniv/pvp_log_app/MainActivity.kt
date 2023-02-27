@@ -13,6 +13,7 @@ import android.widget.Toast
 import android.widget.Toolbar
 import com.ksuniv.pvp_log_app.data.ResponseUserData
 import com.ksuniv.pvp_log_app.data.ServiceCreator
+import com.ksuniv.pvp_log_app.model.Favorite
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         val summoner_name : EditText = findViewById(R.id.summoner_name)
 
         setSupportActionBar(findViewById(R.id.toolbar))
+//        val db = AppDatabase.getInstance(applicationContext)!!
+//        Thread(Runnable {
+//            db.favoriteDao().deleteFavorite(Favorite(2, "연구소 인턴"))
+//        }).start()
+
 //        setCustomToolBar(R.id.toolbar)
 //        supportActionBar?.setDisplayShowTitleEnabled(false)
 //        summorer_name.imeOptions = EditorInfo.IME_ACTION_DONE

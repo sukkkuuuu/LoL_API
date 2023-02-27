@@ -7,14 +7,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.ksuniv.pvp_log_app.data.ResponseLeagueData
 import com.ksuniv.pvp_log_app.data.ResponseUserData
 import com.ksuniv.pvp_log_app.data.ServiceCreator
+import com.ksuniv.pvp_log_app.model.Favorite
 import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,15 +36,43 @@ class LogActivity : AppCompatActivity() {
         val favoriteButton: ImageButton = findViewById(R.id.favorite_btn)
 
         val profileImageUrl = "http://ddragon.leagueoflegends.com/cdn/13.3.1/img/profileicon/${profileIconId}.png"
+
         nameTextView.text = name
         levelTextView.text = summonerLevel + " 레벨"
+        val db = AppDatabase.getInstance(applicationContext)!!
+        var checkUser: String? = null
+        Thread(Runnable {
+            checkUser = db.favoriteDao().getUser(name!!)
+        }).start()
+
+
 //        Log.d("URL", imageUrl)
 //        textView.text = "id: " + id + "\nname: " + name + "\npuuid: " + puuid
         Glide.with(this).load(profileImageUrl).into(imageView)
         requestLeagueInfo(id!!)
 
+        if(checkUser == null){
+            favoriteButton.setImageResource(R.drawable.baseline_favorite_border_24)
+        }else{
+            favoriteButton.setImageResource(R.drawable.baseline_favorite_24)
+        }
         favoriteButton.setOnClickListener{
-            Toast.makeText(this, "Favorite", Toast.LENGTH_LONG).show()
+            if(checkUser == null){
+                favoriteButton.setImageResource(R.drawable.baseline_favorite_24)
+                Toast.makeText(this, "즐겨찾기에 추가", Toast.LENGTH_SHORT).show()
+                Thread(Runnable {
+                    db.favoriteDao().insertFavorite(Favorite(id!!, name!!))
+                }).start()
+                checkUser = name
+            }else{
+                favoriteButton.setImageResource(R.drawable.baseline_favorite_border_24)
+                Toast.makeText(this, "즐겨찾기에 제외", Toast.LENGTH_SHORT).show()
+                Thread(Runnable {
+                    db.favoriteDao().deleteFavorite(Favorite(id!!, name!!))
+                }).start()
+                checkUser = null
+            }
+
         }
     }
 
