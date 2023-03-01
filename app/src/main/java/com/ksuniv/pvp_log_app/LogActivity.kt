@@ -17,10 +17,14 @@ import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class LogActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val dialog = LoadingDialog(this@LogActivity)
+        dialog.show()
         setContentView(R.layout.activity_log)
         setSupportActionBar(findViewById(R.id.toolbar))
 
@@ -28,6 +32,7 @@ class LogActivity : AppCompatActivity() {
         val name = intent.getStringExtra("name")
         val profileIconId = intent.getStringExtra("profileIconId")
         val summonerLevel = intent.getStringExtra("summonerLevel")
+
 
 //        val textView: TextView = findViewById(R.id.textView)
         val imageView: ImageView = findViewById(R.id.imageView)
@@ -74,6 +79,10 @@ class LogActivity : AppCompatActivity() {
             }
 
         }
+        Timer().schedule(600){
+            dialog.dismiss()
+        }
+
     }
 
     private fun requestLeagueInfo(summoner_id: String) {
