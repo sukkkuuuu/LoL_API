@@ -48,6 +48,28 @@ class LogActivity : AppCompatActivity() {
         var checkUser: String? = null
         Thread(Runnable {
             checkUser = db.favoriteDao().getUser(name!!)
+            if(checkUser == null){
+                favoriteButton.setImageResource(R.drawable.baseline_favorite_border_24)
+            }else{
+                favoriteButton.setImageResource(R.drawable.baseline_favorite_24)
+            }
+            favoriteButton.setOnClickListener{
+                if(checkUser == null){
+                    favoriteButton.setImageResource(R.drawable.baseline_favorite_24)
+                    Toast.makeText(this, "즐겨찾기에 추가", Toast.LENGTH_SHORT).show()
+                    Thread(Runnable {
+                        db.favoriteDao().insertFavorite(Favorite(id!!, name!!))
+                    }).start()
+                    checkUser = name
+                }else{
+                    favoriteButton.setImageResource(R.drawable.baseline_favorite_border_24)
+                    Toast.makeText(this, "즐겨찾기에 제외", Toast.LENGTH_SHORT).show()
+                    Thread(Runnable {
+                        db.favoriteDao().deleteFavorite(Favorite(id!!, name!!))
+                    }).start()
+                    checkUser = null
+                }
+            }
         }).start()
 
 
@@ -56,32 +78,11 @@ class LogActivity : AppCompatActivity() {
         Glide.with(this).load(profileImageUrl).into(imageView)
         requestLeagueInfo(id!!)
 
-        if(checkUser == null){
-            favoriteButton.setImageResource(R.drawable.baseline_favorite_border_24)
-        }else{
-            favoriteButton.setImageResource(R.drawable.baseline_favorite_24)
-        }
-        favoriteButton.setOnClickListener{
-            if(checkUser == null){
-                favoriteButton.setImageResource(R.drawable.baseline_favorite_24)
-                Toast.makeText(this, "즐겨찾기에 추가", Toast.LENGTH_SHORT).show()
-                Thread(Runnable {
-                    db.favoriteDao().insertFavorite(Favorite(id!!, name!!))
-                }).start()
-                checkUser = name
-            }else{
-                favoriteButton.setImageResource(R.drawable.baseline_favorite_border_24)
-                Toast.makeText(this, "즐겨찾기에 제외", Toast.LENGTH_SHORT).show()
-                Thread(Runnable {
-                    db.favoriteDao().deleteFavorite(Favorite(id!!, name!!))
-                }).start()
-                checkUser = null
-            }
 
-        }
+
         Timer().schedule(600){
             dialog.dismiss()
-        }
+        }//딜레이
 
     }
 
