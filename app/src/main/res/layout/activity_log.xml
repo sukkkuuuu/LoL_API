@@ -50,87 +50,96 @@
             android:layout_height="0.1dp"
             android:background="@color/black"
             />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/gray"
-            android:weightSum="2"
-            android:paddingBottom="15dp"
             android:paddingTop="15dp"
-            >
+            android:paddingBottom="15dp"
+            android:weightSum="2">
+
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_weight="1"
                 android:gravity="center"
-                >
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="솔로 랭크"
-                    />
+                    android:text="솔로 랭크" />
+
                 <ImageView
                     android:id="@+id/solo_ranked_img"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/unranked"
-                    />
+                    android:src="@drawable/unranked" />
+
                 <TextView
                     android:id="@+id/solo_ranked_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="11sp"
-                    android:textColor="@color/black"
                     android:text="UNRANKED"
-                    />
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
                 <TextView
                     android:id="@+id/solo_ranked_record_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:textColor="@color/black"
                     android:text="--"
-                    />
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_weight="1"
                 android:gravity="center"
-                >
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자유 랭크"
-                    />
+                    android:text="자유 랭크" />
+
                 <ImageView
                     android:id="@+id/flex_ranked_img"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/unranked"
-                    />
+                    android:src="@drawable/unranked" />
+
                 <TextView
                     android:id="@+id/flex_ranked_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="11sp"
-                    android:textColor="@color/black"
                     android:text="UNRANKED"
-                    />
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
                 <TextView
                     android:id="@+id/flex_ranked_record_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:textColor="@color/black"
                     android:text="--"
-                    />
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
 
-
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/matchtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="h"
+                />
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>

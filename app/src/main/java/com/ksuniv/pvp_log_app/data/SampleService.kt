@@ -5,10 +5,9 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 
-private const val API_KEY = "RGAPI-67f6643b-ea6c-426d-8326-30472c380f63"
+private const val API_KEY = "RGAPI-5de35e27-855e-4bff-a27d-f3af83373080"
 
 interface SampleService {
-
     @Headers("Content-Type: application/json")
 
     @GET("lol/summoner/v4/summoners/by-name/{name}?api_key=$API_KEY")
@@ -20,4 +19,6 @@ interface SampleService {
     fun getLeagueInfo(
         @Path("summonerId") summonerId: String
     ): Call<List<ResponseLeagueData>>
+
+
 }
