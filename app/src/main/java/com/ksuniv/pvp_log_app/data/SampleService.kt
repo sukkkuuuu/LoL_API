@@ -19,6 +19,4 @@ interface SampleService {
     fun getLeagueInfo(
         @Path("summonerId") summonerId: String
     ): Call<List<ResponseLeagueData>>
-
-
 }
