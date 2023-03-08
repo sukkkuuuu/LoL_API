@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 
-private const val API_KEY = "RGAPI-5de35e27-855e-4bff-a27d-f3af83373080"
+private const val API_KEY = "RGAPI-bdab0b6b-b286-42f8-9594-c35a845c7843"
 
 interface SampleService {
     @Headers("Content-Type: application/json")

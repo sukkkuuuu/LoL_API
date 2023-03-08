@@ -211,10 +211,13 @@
             android:layout_height="wrap_content"
             >
             <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:scaleType="centerCrop"/>
+                android:id="@+id/win"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                    />
                 <LinearLayout
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -249,11 +252,13 @@
 
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/uesrname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="오징징징잉"
                     />
                 <TextView
+                    android:id="@+id/killdeath"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3 / 5 / 2"

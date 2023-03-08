@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -91,6 +92,22 @@ class LogActivity : AppCompatActivity() {
         Timer().schedule(600){
             dialog.dismiss()
         }//딜레이
+    }
+
+    // 즐겨찾기 메뉴
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.favorite_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item!!.itemId) {
+            R.id.favorite -> {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // 티어 function
@@ -216,7 +233,7 @@ class LogActivity : AppCompatActivity() {
                 response: Response<List<String>>
             ) {
                 if (response.isSuccessful) {
-                    requestIngameInfo(response)
+                    requestIngameInfo(response, puuid)
                 } else {
                     Log.d("FAIL", "FAIL!!")
                 }
@@ -228,7 +245,7 @@ class LogActivity : AppCompatActivity() {
         })
     }
 
-    private fun requestIngameInfo(responseData: Response<List<String>>) {
+    private fun requestIngameInfo(responseData: Response<List<String>>, puuid: String) {
         val matchId = responseData.body()
         matchId?.map {
             // getIngameInfo의 matchId type을 String으로 바꿔줘야한다( 이유는 모름...)
@@ -240,7 +257,7 @@ class LogActivity : AppCompatActivity() {
                     response: Response<ResponseIngameData>
                 ) {
                     if (response.isSuccessful) {
-                        ingameSearch(response)
+                        ingameSearch(response, puuid)
                         Log.d("성공", response.toString())
                     } else {
                         Log.d("실패", "실패")
@@ -258,33 +275,41 @@ class LogActivity : AppCompatActivity() {
         Log.d("ingame", matchId.toString())
     }
 
-    private fun ingameSearch(responseData: Response<ResponseIngameData>) {
+    private fun ingameSearch(responseData: Response<ResponseIngameData>, puuid: String) {
         Log.d("response", responseData.toString())
         val body = responseData.body()
         Log.d("body", body.toString())
-        body?.info?.participants?.map {
-            participarnt(it)
+
+        // 해당 user의 puuid로 사용자의 정보를 가져와야한다
+        body?.metadata?.participants?.map{
+            if (it == puuid){
+                body?.info?.participants?.map {
+                    participarnt(it)
+                    Log.d("info",it.toString())
+                }
+//                Log.d("puuid",it)
+            }
+            else{
+                body?.info?.participants?.map {
+//                    participarnt(it)
+                    Log.d("info",it.toString())
+                }
+            }
+            // nfo 안의 puuid가 metadata의 puuid랑 같다면??? 그 때의 사용자의 info 정보를 가져오는거지
+            Log.d("metadata",it.toString())
         }
+
         val gameMode = body?.info?.gameMode
     }
 
     private fun participarnt(responseData: Participant) {
         val body = responseData
+        val win: ImageView = findViewById(R.id.win)
+        val time: LinearLayout = findViewById(R.id.time)
+        val username: TextView = findViewById(R.id.uesrname)
+        val killdeath: TextView = findViewById(R.id.killdeath)
+        killdeath.text = "${body.kills}/${body.deaths}/${body.assists}(${body.killingSprees})"
+        username.text = "${body.championName}"
         Log.d("들오왔습니다", "${body.deaths}")
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.favorite_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item!!.itemId) {
-            R.id.favorite -> {
-                val intent = Intent(this, FavoriteActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }
