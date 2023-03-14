@@ -51,5 +51,6 @@ data class Participant(
     val itemsPurchased: Int,
     val killingSprees: Int,
     val kills: Int,
-    val lane: String
+    val lane: String,
+    val puuid: String
 )

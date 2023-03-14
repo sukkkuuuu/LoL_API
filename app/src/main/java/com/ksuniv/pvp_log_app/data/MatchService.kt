@@ -5,14 +5,14 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 
-private const val API_KEY = "RGAPI-bdab0b6b-b286-42f8-9594-c35a845c7843"
+private const val API_KEY = "RGAPI-be3a1b2f-be19-4f39-b788-7e3e7dff40e1"
 
 //최근 전적을 위한 Service
 interface MatchService {
     @Headers("Content-Type: application/json")
 
     // 사용자의 puuid를 사용해서 matchId(최근전적)을 들고 와야함
-    @GET("lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count=10&api_key=$API_KEY")
+    @GET("lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count=1&api_key=$API_KEY")
     fun getMatchInfo(
         @Path("puuid") puuid: String
     ) : Call<List<String>> // Call<> 부분이 조금 헷갈리네, 왔다 갔다하는 느낌이라네요

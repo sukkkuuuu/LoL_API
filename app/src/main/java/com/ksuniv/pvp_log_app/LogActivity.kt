@@ -51,6 +51,7 @@ class LogActivity : AppCompatActivity() {
         val profileImageUrl =
             "http://ddragon.leagueoflegends.com/cdn/13.3.1/img/profileicon/${profileIconId}.png"
 
+
         nameTextView.text = name
         levelTextView.text = summonerLevel + " 레벨"
 //        Log.d("URL", imageUrl)
@@ -279,37 +280,65 @@ class LogActivity : AppCompatActivity() {
         Log.d("response", responseData.toString())
         val body = responseData.body()
         Log.d("body", body.toString())
-
         // 해당 user의 puuid로 사용자의 정보를 가져와야한다
         body?.metadata?.participants?.map{
-            if (it == puuid){
+            val metapuuid = it
+//            Log.d("사용자id",it.toString())
+            if (metapuuid == puuid){
                 body?.info?.participants?.map {
-                    participarnt(it)
-                    Log.d("info",it.toString())
+                    var id = it.puuid
+                    if (metapuuid == id){
+                        participarnt(it)
+                        Log.d("aaaa",id)
+                    }
+//                    participarnt(it.puuid)
+//                    Log.d("info",it.toString())
                 }
-//                Log.d("puuid",it)
             }
             else{
                 body?.info?.participants?.map {
-//                    participarnt(it)
-                    Log.d("info",it.toString())
+
+//                    Log.d("info???",it.toString())
+//                    Log.d("nasfonsdofasdf", it.puuid)
                 }
             }
-            // nfo 안의 puuid가 metadata의 puuid랑 같다면??? 그 때의 사용자의 info 정보를 가져오는거지
-            Log.d("metadata",it.toString())
         }
-
         val gameMode = body?.info?.gameMode
     }
 
     private fun participarnt(responseData: Participant) {
+
         val body = responseData
+//        Log.d("puuid",body.championName)
         val win: ImageView = findViewById(R.id.win)
         val time: LinearLayout = findViewById(R.id.time)
         val username: TextView = findViewById(R.id.uesrname)
         val killdeath: TextView = findViewById(R.id.killdeath)
+        val item0Url = "https://ddragon.leagueoflegends.com/cdn/13.5.1/img/item/${body.item0}.png"
+        val item1Url = "https://ddragon.leagueoflegends.com/cdn/13.5.1/img/item/${body.item1}.png"
+        val item2Url = "https://ddragon.leagueoflegends.com/cdn/13.5.1/img/item/${body.item2}.png"
+        val item3Url = "https://ddragon.leagueoflegends.com/cdn/13.5.1/img/item/${body.item3}.png"
+        val item4Url = "https://ddragon.leagueoflegends.com/cdn/13.5.1/img/item/${body.item4}.png"
+        val item5Url = "https://ddragon.leagueoflegends.com/cdn/13.5.1/img/item/${body.item5}.png"
+        val item6Url = "https://ddragon.leagueoflegends.com/cdn/13.5.1/img/item/${body.item6}.png"
+        val item0: ImageView = findViewById(R.id.lol_item0)
+        val item1: ImageView = findViewById(R.id.lol_item1)
+        val item2: ImageView = findViewById(R.id.lol_item2)
+        val item3: ImageView = findViewById(R.id.lol_item3)
+        val item4: ImageView = findViewById(R.id.lol_item4)
+        val item5: ImageView = findViewById(R.id.lol_item5)
+
+        val item6: ImageView = findViewById(R.id.lol_item6)
+        Glide.with(this).load(item0Url).into(item0)
+        Glide.with(this).load(item1Url).into(item1)
+        Glide.with(this).load(item2Url).into(item2)
+        Glide.with(this).load(item3Url).into(item3)
+        Glide.with(this).load(item4Url).into(item4)
+        Glide.with(this).load(item5Url).into(item5)
+        Glide.with(this).load(item6Url).into(item6)
+
         killdeath.text = "${body.kills}/${body.deaths}/${body.assists}(${body.killingSprees})"
         username.text = "${body.championName}"
-        Log.d("들오왔습니다", "${body.deaths}")
+//        Log.d("들오왔습니다", "${body.deaths}")
     }
 }

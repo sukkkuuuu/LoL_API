@@ -272,26 +272,37 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     <ImageView
+                        android:id="@+id/lol_item0"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:scaleType="centerCrop"/>
                     <ImageView
+                        android:id="@+id/lol_item1"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:scaleType="centerCrop"/>
                     <ImageView
+                        android:id="@+id/lol_item2"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:scaleType="centerCrop"/>
                     <ImageView
+                        android:id="@+id/lol_item3"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:scaleType="centerCrop"/>
                     <ImageView
+                        android:id="@+id/lol_item4"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:scaleType="centerCrop"/>
                     <ImageView
+                        android:id="@+id/lol_item5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:scaleType="centerCrop"/>
+                    <ImageView
+                        android:id="@+id/lol_item6"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:scaleType="centerCrop"/>
